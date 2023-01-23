@@ -1,5 +1,6 @@
 // import 'dart:js';
 
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -185,7 +186,7 @@ signInWithGoogle() async {
   print(userCredential.user?.displayName);
 
   if (userCredential.user != null) {
-    // Navigator.of(context as BuildContext)
-    //     .push(MaterialPageRoute(builder: (context) => HomePage()));
+    return HomePage();
+    // Navigator.push(context as BuildContext,MaterialPageRoute(builder: (context) => const HomePage()),);
   }
 }

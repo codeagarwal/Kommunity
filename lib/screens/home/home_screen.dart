@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../model/course.dart';
 import 'components/course_card.dart';
 import 'components/secondary_course_card.dart';
