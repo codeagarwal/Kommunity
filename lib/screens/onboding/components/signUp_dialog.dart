@@ -1,18 +1,10 @@
-// import 'dart:js';
+import 'dart:ffi';
 
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kommunity/screens/home/home_screen.dart';
-import 'package:kommunity/screens/onboding/components/signUp_dialog.dart';
+import 'package:kommunity/screens/onboding/components/sign_in_form.dart';
 
-import 'sign_in_form.dart';
-
-bool issignUpDialogue = false;
-
-void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
+void signUpdialogue(BuildContext context, {required ValueChanged onValue}) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
@@ -95,23 +87,7 @@ void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Future.delayed(
-                              const Duration(milliseconds: 800),
-                                  () {
-                                signUpdialogue(context, onValue: onValue);
-                                // setState(() {
-                                //   issignUpDialogue = true;
-                                // });
-                                // signUpdialogue(
-                                //   context,
-                                //   onValue: (_) {
-                                //     setState(() {
-                                //       var issignUpDialogue = true;
-                                //     },);
-                                //   },
-                                // );
-                              },
-                            );
+                            // Navigator.push(context, MaterialPageRoute(builder: context => Sign))
                           },
                           padding: EdgeInsets.zero,
                           icon: SvgPicture.asset(
@@ -133,7 +109,7 @@ void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
                         ),
                         IconButton(
                           onPressed: () {
-                            signInWithGoogle();
+                            // signInWithGoogle();
                           },
                           padding: EdgeInsets.zero,
                           icon: SvgPicture.asset(
@@ -146,39 +122,35 @@ void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
                     ),
                   ],
                 ),
-                const Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: -48,
-                  child: CircleAvatar(
-                    radius: 16,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.close,
-                      size: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                )
+                // const Positioned(
+                //   left: 0,
+                //   right: 0,
+                //   bottom: -48,
+                //   child: CircleAvatar(
+                //     radius: 16,
+                //     backgroundColor: Colors.white,
+                //     child: Icon(
+                //       Icons.close,
+                //       size: 20,
+                //       color: Colors.black,
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),
         ),
       );
     },
-
-    //Transition Manager of SignIn Dilaogue
-
-
     transitionBuilder: (_, anim, __, child) {
       Tween<Offset> tween;
       if (anim.status == AnimationStatus.reverse) {
-        tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
+        tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
       } else {
         tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
       }
 
-      tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+      tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
 
       return SlideTransition(
         position: tween.animate(
@@ -192,24 +164,4 @@ void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
       );
     },
   ).then(onValue);
-}
-
-signInWithGoogle() async {
-  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  GoogleSignInAuthentication? googeleAuth = await googleUser?.authentication;
-
-  AuthCredential credential = GoogleAuthProvider.credential(
-    idToken: googeleAuth?.accessToken,
-    accessToken: googeleAuth?.idToken,
-  );
-
-  UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithCredential(credential);
-
-  print(userCredential.user?.displayName);
-
-  if (userCredential.user != null) {
-    return HomePage();
-    // Navigator.push(context as BuildContext,MaterialPageRoute(builder: (context) => const HomePage()),);
-  }
 }

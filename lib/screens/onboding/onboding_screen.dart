@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-
 import 'components/animated_btn.dart';
 import 'components/sign_in_dialog.dart';
 
@@ -88,7 +87,7 @@ class _OnbodingScreenState extends State<OnbodingScreen> {
                         ],
                       ),
                     ),
-                    const Spacer(flex: 2),
+                    const Spacer(flex: 1),
                     AnimatedBtn(
                       btnAnimationController: _btnAnimationController,
                       press: () {
@@ -102,10 +101,12 @@ class _OnbodingScreenState extends State<OnbodingScreen> {
                             });
                             showCustomDialog(
                               context,
-                              onValue: (_) {
+                              onValue: (_)
+                              {
                                 setState(() {
-                                  isShowSignInDialog = false;
-                                });
+                                  isShowSignInDialog = true;
+                                }
+                                );
                               },
                             );
                           },
